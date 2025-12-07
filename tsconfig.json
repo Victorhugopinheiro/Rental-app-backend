@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    // === Estrutura de Arquivos ===
+    "rootDir": "./src",            // Descomentado para garantir a estrutura correta em /dist
+    "outDir": "./dist",
+
+    // === Ambiente (Configuração Híbrida Segura) ===
+    // Se seu package.json NÃO tem "type": "module", use commonjs aqui:
+    "module": "commonjs",          
+    "target": "es2022",            // Um alvo moderno, mas suportado por Node 18+
+    
+    // === Tipagem ===
+    "lib": ["es2023"],             // Funcionalidades modernas de JS
+    // Se types estiver vazio, ele ignora @types/node. Remova ou defina explicitamente:
+    // "types": ["node"], 
+
+    // === Outputs Extras ===
+    "sourceMap": true,
+    "declaration": true,           // Mantive pois seu script 'postprisma' parece usar tipos
+    
+    // === Rigidez e Qualidade (Mantive suas ótimas escolhas) ===
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    
+    // === Compatibilidade ===
+    "esModuleInterop": true,       // CRUCIAL: Permite importar pacotes antigos (CommonJS) facilmente
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
