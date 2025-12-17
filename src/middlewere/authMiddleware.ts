@@ -18,7 +18,7 @@ declare global {
     }
 }
 
-const authMiddleware = (allowedRules: string[]) => {
+export const authMiddleware = (allowedRules: string[]) => {
 
     return (req: Request, res: Response, next: NextFunction) => {
 
