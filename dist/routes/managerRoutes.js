@@ -7,9 +7,11 @@ const express_1 = __importDefault(require("express"));
 const getManagerController_1 = __importDefault(require("../controllers/managers/getManagerController"));
 const createManagerController_1 = __importDefault(require("../controllers/managers/createManagerController"));
 const UpdateManagerInfoController_1 = require("../controllers/managers/UpdateManagerInfoController");
+const getManagerPropertiesController_1 = __importDefault(require("../controllers/managers/getManagerPropertiesController"));
 const router = express_1.default.Router();
 router.get("/:cognitoId", getManagerController_1.default);
 router.post("/", createManagerController_1.default);
-router.put("/cognitoId", UpdateManagerInfoController_1.UpdateManagerInfoController);
+router.put("/:cognitoId", UpdateManagerInfoController_1.UpdateManagerInfoController);
+router.get("/:managerId/properties", getManagerPropertiesController_1.default);
 exports.default = router;
 //# sourceMappingURL=managerRoutes.js.map

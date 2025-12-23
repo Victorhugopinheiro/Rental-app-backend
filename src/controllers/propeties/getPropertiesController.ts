@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import getProperiesService from "../../services/propeties/getPropetiesService";
+import getProperiesService from "../../services/propeties/getPropertiesService";
 import { GetPropertiesQuery } from "../../types/propertyQuery";
 
-const getPropetiesController = (req: Request, res: Response) => {
+const getPropertiesController = async (req: Request, res: Response) => {
 
     const {
         favoriteIds,
@@ -20,13 +20,22 @@ const getPropetiesController = (req: Request, res: Response) => {
 
     } = req.query as GetPropertiesQuery;
 
-    const resService = getProperiesService({
+     if (!favoriteIds) {
+        return res.status(400).json({ message: "favoriteIds query param is required" })
+    }
+
+    const resService = await getProperiesService({
         amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude
         , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin
     });
 
-    if (!favoriteIds) {
-        return res.status(400).json({ message: "favoriteIds query param is required" })
-    }
+
+    return res.status(200).json(resService);
+
+    
+
+   
 
 }
+
+export default getPropertiesController;

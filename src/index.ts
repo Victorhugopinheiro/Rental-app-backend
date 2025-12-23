@@ -29,9 +29,7 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
 
 
 
-app.get('/', (req, res) => {
-    res.send('Rental App Server is running');
-})
+
 app.use("/tenants", authMiddleware(['tenant']), tenantRouter)
 app.use("/managers", authMiddleware(['manager']), managerRouter)
 app.use("/properties", propetiesRouter)

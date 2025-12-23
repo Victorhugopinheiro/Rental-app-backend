@@ -7,7 +7,7 @@ export const UpdateTenantInfoController = async (req: Request, res: Response): P
         const { name, email, phoneNumber } = req.body
 
         if(!cognitoId || name === undefined || email === undefined || phoneNumber === undefined){
-            res.status(400).json({message: "Missing required fields"})
+            res.status(400).json({message: "Preencha todos os campos!"})
             return
         }
 
