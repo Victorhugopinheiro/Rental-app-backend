@@ -38,6 +38,8 @@ const getManagerPropertiesService = async (managerId: string) => {
         })
     )
 
+    return ProperiesWithFormateLocation;
+
 }
 
 
