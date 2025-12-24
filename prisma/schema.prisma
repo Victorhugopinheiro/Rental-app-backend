@@ -72,7 +72,7 @@ model Location {
 model Application {
   id              Int               @id @default(autoincrement())
   applicationDate DateTime
-  status          ApplicationStatus
+  status          ApplicationStatus 
   propertyId      Int
   tenantCognitoId String
   name            String

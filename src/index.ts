@@ -12,6 +12,7 @@ import tenantRouter from "./routes/tenantRoutes";
 import managerRouter from "./routes/managerRoutes";
 import propetiesRouter from "./routes/propetiesRoutes";
 import {authMiddleware} from "./middlewere/authMiddleware"
+import applicationRoutes from "./routes/applicationRoutes";
 
 const app = express();
 
@@ -33,6 +34,7 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
 app.use("/tenants", authMiddleware(['tenant']), tenantRouter)
 app.use("/managers", authMiddleware(['manager']), managerRouter)
 app.use("/properties", propetiesRouter)
+app.use("/applications", applicationRoutes)
 
 
 const PORT = process.env.PORT || 3002;
