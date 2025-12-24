@@ -27,6 +27,7 @@ const getManagerPropertiesService = async (managerId) => {
             }
         };
     }));
+    return ProperiesWithFormateLocation;
 };
 exports.default = getManagerPropertiesService;
 //# sourceMappingURL=getManagerPropertiesService.js.map
