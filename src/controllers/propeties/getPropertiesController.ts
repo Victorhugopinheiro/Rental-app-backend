@@ -4,37 +4,43 @@ import { GetPropertiesQuery } from "../../types/propertyQuery";
 
 const getPropertiesController = async (req: Request, res: Response) => {
 
-    const {
-        favoriteIds,
-        priceMin,
-        priceMax,
-        bedrooms,
-        bathrooms,
-        availableFrom,
-        squareFeetMin,
-        squareFeetMax,
-        propertyType,
-        amenities,
-        longitude,
-        latitude,
+    try {
+        const {
+            favoriteIds,
+            priceMin,
+            priceMax,
+            bedrooms,
+            bathrooms,
+            availableFrom,
+            squareFeetMin,
+            squareFeetMax,
+            propertyType,
+            amenities,
+            longitude,
+            latitude,
 
-    } = req.query as GetPropertiesQuery;
+        } = req.query as GetPropertiesQuery;
 
-     if (!favoriteIds) {
-        return res.status(400).json({ message: "favoriteIds query param is required" })
+        if (!favoriteIds) {
+            return res.status(400).json({ message: "favoriteIds query param is required" })
+        }
+
+        const resService = await getProperiesService({
+            amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude
+            , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin
+        });
+
+        return res.status(200).json(resService);
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
     }
 
-    const resService = await getProperiesService({
-        amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude
-        , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin
-    });
 
 
-    return res.status(200).json(resService);
 
-    
 
-   
+
+
 
 }
 

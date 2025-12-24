@@ -4,15 +4,19 @@ import getManagerPropertiesService from "../../services/managers/getManagerPrope
 
 const getManagerPropertiesController = async (req: Request, res: Response) => {
 
-    const { managerId } = req.params;
+    try {
+        const { managerId } = req.params;
 
-    if (!managerId) {
-        res.status(400).json({ message: "Id do manager é obrigatório" });
+        if (!managerId) {
+            res.status(400).json({ message: "Id do manager é obrigatório" });
+        }
+
+        const ProperiesService = await getManagerPropertiesService(managerId!);
+
+        res.status(200).json(ProperiesService);
+    }catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
     }
-
-    const ProperiesService = await getManagerPropertiesService(managerId!);
-
-    res.status(200).json(ProperiesService);
 
 }
 

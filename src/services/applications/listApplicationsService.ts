@@ -21,14 +21,6 @@ const listApplicationsService = async ({ userId, userRole }: ListApplicationsSer
         }
     }
 
-    const nextPaymentDate = (startDate: Date) => {
-        const today = new Date();
-        const nextPayment = new Date(startDate);
-        while (nextPayment <= today) {
-            nextPayment.setMonth(nextPayment.getMonth() + 1);
-        }
-
-    }
 
 
     const applications = await prisma.application.findMany({
@@ -45,6 +37,15 @@ const listApplicationsService = async ({ userId, userRole }: ListApplicationsSer
             lease: true
         }
     })
+
+    const nextPaymentDate = (startDate: Date) => {
+        const today = new Date();
+        const nextPayment = new Date(startDate);
+        while (nextPayment <= today) {
+            nextPayment.setMonth(nextPayment.getMonth() + 1);
+        }
+
+    }
 
 
     const formattedApplications = applications.map((application) => {

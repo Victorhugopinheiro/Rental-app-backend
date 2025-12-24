@@ -81,9 +81,13 @@ const createApplicationService = async (data: CreateApplicationRequest) => {
             }
         })
 
+        return application;
+
 
 
     })
+
+    return newApplication;
 
 }
 

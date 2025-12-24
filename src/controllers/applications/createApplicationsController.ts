@@ -3,7 +3,8 @@ import createApplicationService from '../../services/applications/createApplicat
 
 const createApplicationController = async (req: Request, res: Response) => {
 
-    const {
+    try{
+        const {
         applicationDate,
         status,
         propertyId,
@@ -25,6 +26,9 @@ const createApplicationController = async (req: Request, res: Response) => {
         message
     })
 
+    }catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 export default createApplicationController;
