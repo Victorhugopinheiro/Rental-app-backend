@@ -14,6 +14,7 @@ const tenantRoutes_1 = __importDefault(require("./routes/tenantRoutes"));
 const managerRoutes_1 = __importDefault(require("./routes/managerRoutes"));
 const propetiesRoutes_1 = __importDefault(require("./routes/propetiesRoutes"));
 const authMiddleware_1 = require("./middlewere/authMiddleware");
+const applicationRoutes_1 = __importDefault(require("./routes/applicationRoutes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
@@ -27,6 +28,7 @@ const adapter = new adapter_pg_1.PrismaPg({ connectionString: process.env.DATABA
 app.use("/tenants", (0, authMiddleware_1.authMiddleware)(['tenant']), tenantRoutes_1.default);
 app.use("/managers", (0, authMiddleware_1.authMiddleware)(['manager']), managerRoutes_1.default);
 app.use("/properties", propetiesRoutes_1.default);
+app.use("/applications", applicationRoutes_1.default);
 const PORT = process.env.PORT || 3002;
 const databaseUrl = process.env.DATABASE_URL || 'No database url';
 app.listen(PORT, () => {
