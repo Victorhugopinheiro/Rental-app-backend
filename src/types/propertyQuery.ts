@@ -13,6 +13,7 @@ export interface GetPropertiesQuery {
   amenities?: string | string[] | undefined;
   longitude?: string | undefined;
   latitude?: string | undefined;
+  location?: string | undefined;
 }
 
 export interface GetPropertiesFilters {

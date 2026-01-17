@@ -18,16 +18,30 @@ const getPropertiesController = async (req: Request, res: Response) => {
             amenities,
             longitude,
             latitude,
+            location
 
         } = req.query as GetPropertiesQuery;
 
-        if (!favoriteIds) {
-            return res.status(400).json({ message: "favoriteIds query param is required" })
-        }
+        const parsedQuery = {
+            location: location ? String(location) : undefined,
+            priceMin: priceMin ? Number(priceMin) : undefined,
+            priceMax: priceMax ? Number(priceMax) : undefined,
+            bedrooms: bedrooms ? Number(bedrooms) : undefined,
+            bathrooms: bathrooms ? Number(bathrooms) : undefined,
+            squareFeetMin: squareFeetMin ? Number(squareFeetMin) : undefined,
+            squareFeetMax: squareFeetMax ? Number(squareFeetMax) : undefined,
+            latitude: latitude ? Number(latitude) : undefined,
+            longitude: longitude ? Number(longitude) : undefined,
+            availableFrom: availableFrom ? String(availableFrom) : undefined,
+            propertyType: propertyType ? String(propertyType) : undefined,
+            // Tratamento especial para arrays separados por vírgula
+            amenities: amenities ? (String(amenities).split(",") as any) : undefined,
+            favoriteIds: favoriteIds ? String(favoriteIds).split(",").map(Number) : undefined
+        };
 
         const resService = await getProperiesService({
             amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude
-            , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin
+            , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin, location
         });
 
         return res.status(200).json(resService);

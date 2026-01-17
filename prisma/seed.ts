@@ -44,7 +44,8 @@ async function insertLocationData(locations: any[]) {
 }
 
 async function resetSequence(modelName: string) {
-  const tableName = toPascalCase(modelName).toLowerCase() + 's'; // Convenção plural
+  // Prisma usa o nome do model exatamente como está no schema (PascalCase)
+  const tableName = toPascalCase(modelName);
 
   // Ajuste de tipagem para acessar o modelo dinamicamente
   const model = (prisma as any)[toCamelCase(modelName)];
@@ -58,7 +59,7 @@ async function resetSequence(modelName: string) {
   });
 
   if (maxIdResult.length === 0) {
-    await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('${tableName}', 'id'), 1, false);`);
+    await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"${tableName}"', 'id'), 1, false);`);
     console.log(`Reset sequence for ${modelName} to 1 (table was empty).`);
     return;
   }
@@ -66,7 +67,7 @@ async function resetSequence(modelName: string) {
   const nextId = maxIdResult[0].id + 1;
   
   // Usando executeRawUnsafe para o nome da tabela dinâmico (mais compatível com seed scripts)
-  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('${tableName}', 'id'), ${nextId}, false);`);
+  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"${tableName}"', 'id'), ${nextId}, false);`);
 
   console.log(`Reset sequence for ${modelName} to ${nextId}`);
 }

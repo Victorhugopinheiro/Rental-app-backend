@@ -11,6 +11,9 @@ const getPropertyController = async (req, res) => {
             return res.status(400).json({ message: "Property id is required" });
         }
         const resService = await (0, getPropertyService_1.default)({ id });
+        if (!resService) {
+            return res.status(404).json({ message: "Property not found" });
+        }
         return res.status(200).json(resService);
     }
     catch (error) {

@@ -1,3 +1,3 @@
 import { GetPropertiesQuery } from "../../types/propertyQuery";
-declare const getProperiesService: ({ amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude, longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin }: GetPropertiesQuery) => Promise<unknown>;
+declare const getProperiesService: ({ amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude, longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin, location }: GetPropertiesQuery) => Promise<unknown>;
 export default getProperiesService;

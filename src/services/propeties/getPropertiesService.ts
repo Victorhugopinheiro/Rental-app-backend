@@ -5,7 +5,7 @@ import { prisma } from "../../lib/prisma";
 
 
 const getProperiesService = async ({ amenities, availableFrom, bathrooms, bedrooms, favoriteIds, latitude
-    , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin
+    , longitude, priceMax, priceMin, propertyType, squareFeetMax, squareFeetMin, location
 
 }: GetPropertiesQuery) => {
 

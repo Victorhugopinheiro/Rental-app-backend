@@ -10,8 +10,15 @@ const getPropertyService = async ({ id }) => {
             location: true,
         }
     });
-    const coordinates = await prisma_1.prisma.$queryRaw `SELECT ST_asText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`;
-    const geoJson = (0, wkt_1.wktToGeoJSON)(coordinates.coordinates[0] || '');
+    if (!property) {
+        throw new Error("Property not found");
+    }
+    const coordinatesResult = await prisma_1.prisma.$queryRaw `SELECT ST_asText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`;
+    const coordinatesString = coordinatesResult[0]?.coordinates;
+    if (!coordinatesString) {
+        throw new Error("Coordinates not found");
+    }
+    const geoJson = (0, wkt_1.wktToGeoJSON)(coordinatesString);
     const logintude = geoJson?.coordinates[0];
     const latitude = geoJson?.coordinates[1];
     const properyWithContination = {

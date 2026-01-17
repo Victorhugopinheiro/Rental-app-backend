@@ -14,7 +14,7 @@ router.post("/", createTenantController)
 router.put("/:cognitoId", UpdateTenantInfoController)
 router.get("/:cognitoId/current-residences", getCurrentResidencesController)
 router.post("/:cognitoId/add-favorite-property/:propertyId", addFavoritePropertyController)
-router.delete("/:congnitoId/remove-favorite-property/:propertyId", removeFavoritePropertyController)
+router.delete("/:cognitoId/remove-favorite-property/:propertyId", removeFavoritePropertyController)
 
 
 export default router;
