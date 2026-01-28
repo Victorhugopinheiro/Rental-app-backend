@@ -7,7 +7,7 @@ import ListApplicationsController from '../controllers/applications/listApplicat
 const router = express.Router();
 
 router.post("/", authMiddleware(["tenant"]) ,createApplicationController)
-router.put("/applicationId/:applicationId", authMiddleware(["manager"]), updateApplicationIdController)
+router.put("/:applicationId/status", authMiddleware(["manager"]), updateApplicationIdController)
 router.get("/", authMiddleware(["manager", "tenant"]), ListApplicationsController)
 
 export default router;
