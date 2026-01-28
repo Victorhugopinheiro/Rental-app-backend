@@ -7,6 +7,9 @@ const getLeasesService_1 = __importDefault(require("../../services/leases/getLea
 const getLeasesController = async (req, res) => {
     try {
         const leasesService = await (0, getLeasesService_1.default)();
+        if (!leasesService) {
+            return res.status(404).json({ message: 'Leases not found' });
+        }
         return res.status(200).json({ leasesService });
     }
     catch (error) {

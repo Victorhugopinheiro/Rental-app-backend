@@ -34,6 +34,7 @@ const createPropertyController = async (req, res) => {
             propertyType: propertyType,
             images: files
         };
+        console.log("CreatePropertyInput:", input);
         const property = await (0, createPropertyService_1.default)(input);
         res.status(201).json(property);
     }

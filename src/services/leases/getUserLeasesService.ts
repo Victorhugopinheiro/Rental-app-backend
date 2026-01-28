@@ -9,7 +9,12 @@ const getUserLeasesService = async ({ userId }: { userId: string }) => {
         },
         include: {
             property: true,
-            tenant: true
+            tenant: true,
+            payments:{
+                orderBy:{
+                   dueDate: 'desc'
+                }
+            }
         }
     })
 

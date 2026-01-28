@@ -58,6 +58,8 @@ const createPropertyController = async (req: Request, res: Response): Promise<vo
             images: files
         };
 
+
+            console.log("CreatePropertyInput:", input);
         const property = await createPropertyService(input);
         
         res.status(201).json(property);

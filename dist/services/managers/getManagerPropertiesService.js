@@ -13,7 +13,11 @@ const getManagerPropertiesService = async (managerId) => {
     });
     const ProperiesWithFormateLocation = await Promise.all(managerProperies.map(async (property) => {
         const coordinates = await prisma_1.prisma.$queryRaw `SELECT ST_asText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`;
-        const geoJson = (0, wkt_1.wktToGeoJSON)(coordinates.coordinates[0] || '');
+        const coordinatesString = coordinates[0]?.coordinates;
+        if (!coordinatesString) {
+            throw new Error("Coordinates not found");
+        }
+        const geoJson = (0, wkt_1.wktToGeoJSON)(coordinatesString || '');
         const logintude = geoJson?.coordinates[0];
         const latitude = geoJson?.coordinates[1];
         return {

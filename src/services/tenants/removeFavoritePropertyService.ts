@@ -11,7 +11,8 @@ const removeFavoritePropertyService = async ({ cognitoId, propertyId }: Favorite
     const tenant = await prisma.tenant.findUnique({
         where: { cognitoId },
         include: {
-            properties: true
+            properties: true,
+            favorites: true
         }
     })
 
@@ -19,7 +20,7 @@ const removeFavoritePropertyService = async ({ cognitoId, propertyId }: Favorite
         throw new Error("Tenant not found");
     }
 
-    const tenantProperties = tenant?.properties || [];
+    const tenantProperties = tenant?.favorites || [];
 
 
     if (tenantProperties.some((property) => property.id === propertyId)) {
@@ -30,7 +31,8 @@ const removeFavoritePropertyService = async ({ cognitoId, propertyId }: Favorite
                 favorites: {
                     disconnect: { id: propertyId }
                 }
-            }
+            },
+            include: {favorites: true}
 
         })
         return removeProperty;

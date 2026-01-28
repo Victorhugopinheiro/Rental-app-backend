@@ -34,6 +34,7 @@ const listApplicationsService = async ({ userId, userRole }) => {
         while (nextPayment <= today) {
             nextPayment.setMonth(nextPayment.getMonth() + 1);
         }
+        return nextPayment;
     };
     const formattedApplications = applications.map((application) => {
         return {

@@ -17,7 +17,11 @@ const getCurrentResidencesService = async ({ cognitoId }) => {
     });
     const residencesWithDetails = await Promise.all(tenatResidences.map(async (property) => {
         const coordinates = await prisma_1.prisma.$queryRaw `SELECT ST_AsText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`;
-        const geoJson = (0, wkt_1.wktToGeoJSON)(coordinates.coordinates[0] || '');
+        const coordinatesString = coordinates[0]?.coordinates;
+        if (!coordinatesString) {
+            throw new Error("Coordinates not found");
+        }
+        const geoJson = (0, wkt_1.wktToGeoJSON)(coordinatesString || '');
         const longitude = geoJson?.coordinates[0];
         const latitude = geoJson?.coordinates[1];
         return {

@@ -17,17 +17,23 @@ const getManagerPropertiesService = async (managerId: string) => {
 
     const ProperiesWithFormateLocation = await Promise.all(
 
-        managerProperies.map( async (property) => {
-            const coordinates:{coordinates:string[]} = await prisma.$queryRaw `SELECT ST_asText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`
-            
-            const geoJson:any = wktToGeoJSON(coordinates.coordinates[0] || '');
+        managerProperies.map(async (property) => {
+            const coordinates: Array<{ coordinates: string }> = await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`
+
+            const coordinatesString = coordinates[0]?.coordinates;
+
+            if (!coordinatesString) {
+                throw new Error("Coordinates not found");
+            }
+
+            const geoJson: any = wktToGeoJSON(coordinatesString || '');
 
             const logintude = geoJson?.coordinates[0];
             const latitude = geoJson?.coordinates[1];
 
-            return{
+            return {
                 ...property,
-                location:{
+                location: {
                     ...property.location,
                     coordinates: {
                         longitude: logintude,

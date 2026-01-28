@@ -48,7 +48,7 @@ declare const listApplicationsService: ({ userId, userRole }: ListApplicationsSe
         phoneNumber: string;
     };
     lease: {
-        nextPaymentDate: void;
+        nextPaymentDate: Date;
         id: number;
         startDate: Date;
         endDate: Date;

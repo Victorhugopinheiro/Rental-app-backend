@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const lib_storage_1 = require("@aws-sdk/lib-storage");
 const prisma_1 = require("../../lib/prisma");
 const client_s3_1 = require("@aws-sdk/client-s3");
 const axios_1 = __importDefault(require("axios"));
@@ -12,19 +11,6 @@ const createPropertyService = async (input) => {
         region: process.env.AWS_REGION || "us-east-1",
     });
     const { address, city, state, country, postalCode, managerCognitoId, images, ...propertyData } = input;
-    const photoUrls = (await Promise.all(input.images.map(async (file) => {
-        const uploadParams = {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: `properties/${Date.now()}-${file.originalname}`,
-            Body: file.buffer,
-            ContentType: file.mimetype,
-        };
-        const uploadResult = await new lib_storage_1.Upload({
-            client: s3Client,
-            params: uploadParams,
-        }).done();
-        return uploadResult.Location;
-    }))).filter((url) => url !== undefined);
     const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
         street: address,
         city,
@@ -55,7 +41,7 @@ const createPropertyService = async (input) => {
     const newProperty = await prisma_1.prisma.property.create({
         data: {
             ...propertyData,
-            photoUrls,
+            // photoUrls,
             locationId: location.id,
             managerCognitoId,
             amenities: propertyData.amenities ? propertyData.amenities : [],

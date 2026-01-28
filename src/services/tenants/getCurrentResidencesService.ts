@@ -23,11 +23,15 @@ const getCurrentResidencesService = async ({ cognitoId }: { cognitoId: string })
     const residencesWithDetails = await Promise.all(
 
         tenatResidences.map(async (property) => {
-            const coordinates: { coordinates: string[] } = await prisma.$queryRaw`SELECT ST_AsText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`
+            const coordinates: Array<{ coordinates: string }> = await prisma.$queryRaw`SELECT ST_AsText(coordinates) as coordinates FROM "Location" WHERE id = ${property?.locationId}`
 
+            const coordinatesString = coordinates[0]?.coordinates;
 
+            if (!coordinatesString) {
+                throw new Error("Coordinates not found");
+            }
 
-            const geoJson: any = wktToGeoJSON(coordinates.coordinates[0] || '');
+            const geoJson: any = wktToGeoJSON(coordinatesString || '');
 
             const longitude = geoJson?.coordinates[0]
             const latitude = geoJson?.coordinates[1];
@@ -50,7 +54,7 @@ const getCurrentResidencesService = async ({ cognitoId }: { cognitoId: string })
     )
 
 
-    return  residencesWithDetails;
+    return residencesWithDetails;
 
 }
 

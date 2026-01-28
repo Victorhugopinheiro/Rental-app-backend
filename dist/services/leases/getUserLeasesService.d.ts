@@ -1,9 +1,7 @@
-interface FavoritePropertyService {
-    cognitoId: string;
-    propertyId: number;
-}
-declare const removeFavoritePropertyService: ({ cognitoId, propertyId }: FavoritePropertyService) => Promise<{
-    favorites: {
+declare const getUserLeasesService: ({ userId }: {
+    userId: string;
+}) => Promise<({
+    property: {
         name: string;
         id: number;
         description: string;
@@ -24,12 +22,30 @@ declare const removeFavoritePropertyService: ({ cognitoId, propertyId }: Favorit
         numberOfReviews: number | null;
         locationId: number;
         managerCognitoId: string;
+    };
+    tenant: {
+        name: string;
+        id: number;
+        cognitoId: string;
+        email: string;
+        phoneNumber: string;
+    };
+    payments: {
+        id: number;
+        leaseId: number;
+        amountDue: number;
+        amountPaid: number;
+        dueDate: Date;
+        paymentDate: Date;
+        paymentStatus: import(".prisma/client").$Enums.PaymentStatus;
     }[];
 } & {
-    name: string;
     id: number;
-    cognitoId: string;
-    email: string;
-    phoneNumber: string;
-}>;
-export default removeFavoritePropertyService;
+    startDate: Date;
+    endDate: Date;
+    rent: number;
+    deposit: number;
+    propertyId: number;
+    tenantCognitoId: string;
+})[]>;
+export default getUserLeasesService;

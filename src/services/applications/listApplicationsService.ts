@@ -45,6 +45,8 @@ const listApplicationsService = async ({ userId, userRole }: ListApplicationsSer
             nextPayment.setMonth(nextPayment.getMonth() + 1);
         }
 
+        return nextPayment;
+
     }
 
 
